@@ -11,9 +11,14 @@ Welcome to your new app.
     {
         if (firstRender)
         {
-            var supproted = await Toasts.IsSupported();
-            Console.WriteLine($"Suported: {supproted}");
-        }
+            var supported = await Toasts.IsSupported();
+            Console.WriteLine($"Supported: {supported}");
 
+            if (supported)
+            {
+                var permission = await Toasts.RequestPermission();
+                Console.WriteLine($"Permission: {permission}");
+            }
+        }
     }
 }

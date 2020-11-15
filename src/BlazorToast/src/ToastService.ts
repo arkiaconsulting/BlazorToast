@@ -30,3 +30,7 @@ let toastService: ToastService = new ToastService();
 export function isSupported(): boolean {
     return toastService.IsSupported();
 }
+
+export function requestPermission(): Promise<string> {
+    return toastService.RequestPermission();
+}

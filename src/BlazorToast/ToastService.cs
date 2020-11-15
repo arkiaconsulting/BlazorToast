@@ -6,9 +6,9 @@ namespace BlazorToast
 {
     public class ToastService : IAsyncDisposable
     {
-        private const string AreSupportedFunctionName = "isSupported";
-        private const string RequestPermissionFunctionName = "requestPermission";
-        private const string CreateFunctionName = "create";
+        private const string IsSupportedMethod = "isSupported";
+        private const string RequestPermissionMethod = "requestPermission";
+        private const string CreateMethod = "create";
 
         private readonly Lazy<Task<IJSObjectReference>> moduleTask;
 
@@ -22,7 +22,21 @@ namespace BlazorToast
         {
             var module = await moduleTask.Value;
 
-            return await module.InvokeAsync<bool>(AreSupportedFunctionName);
+            return await module.InvokeAsync<bool>(IsSupportedMethod);
+        }
+
+        public async ValueTask<NotificationPermission> RequestPermission()
+        {
+            var module = await moduleTask.Value;
+
+            var invocationResult = await module.InvokeAsync<string>(RequestPermissionMethod);
+
+            if (!Enum.TryParse(invocationResult, out NotificationPermission permission))
+            {
+                throw new InvalidOperationException($"Unknown permission value: '{invocationResult}'");
+            }
+
+            return permission;
         }
 
         public async ValueTask DisposeAsync()
