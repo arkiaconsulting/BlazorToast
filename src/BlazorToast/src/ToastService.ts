@@ -34,3 +34,7 @@ export function isSupported(): boolean {
 export function requestPermission(): Promise<string> {
     return toastService.RequestPermission();
 }
+
+export function create(title: string, options: object): object {
+    return toastService.Create(title, options);
+}

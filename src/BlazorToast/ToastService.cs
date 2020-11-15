@@ -39,6 +39,13 @@ namespace BlazorToast
             return permission;
         }
 
+        public async ValueTask<object> Create(string title, object options)
+        {
+            var module = await moduleTask.Value;
+
+            return await module.InvokeAsync<object>(CreateMethod, title, options);
+        }
+
         public async ValueTask DisposeAsync()
         {
             if (moduleTask.IsValueCreated)
