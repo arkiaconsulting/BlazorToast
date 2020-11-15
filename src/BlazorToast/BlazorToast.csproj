@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<TypescriptOutDir>wwwroot</TypescriptOutDir>
+		<RootNamespace>BlazorToast</RootNamespace>
+		<TypeScriptToolsVersion>3.4.5</TypeScriptToolsVersion>
+		<DefaultItemExcludes>${DefaultItemExcludes};content\**;node_modules\**</DefaultItemExcludes>
+		<IsPackable>true</IsPackable>
+		<BlazorLinkOnBuild>false</BlazorLinkOnBuild>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<TypeScriptCompile Remove="node_modules\**" />
+		<Content Remove="package-lock.json" />
+		<Content Remove="package.json" />
+		<None Include="package-lock.json" />
+		<None Include="package.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.0" />
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.3" />
+	</ItemGroup>
+	
+	<PropertyGroup>
+	  <TypeScriptTarget>ESNext</TypeScriptTarget>
+	  <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+	  <TypeScriptModuleKind>ES6</TypeScriptModuleKind>
+	  <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+	  <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+	  <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+	  <TypeScriptOutFile />
+	  <TypeScriptOutDir>wwwroot</TypeScriptOutDir>
+	  <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+	  <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+	  <TypeScriptSourceMap>True</TypeScriptSourceMap>
+	  <TypeScriptMapRoot />
+	  <TypeScriptSourceRoot />
+	</PropertyGroup>
+
+</Project>

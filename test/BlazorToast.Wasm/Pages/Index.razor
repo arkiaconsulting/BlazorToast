@@ -1,0 +1,19 @@
+﻿@page "/"
+
+@inject ToastService Toasts
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var supproted = await Toasts.IsSupported();
+            Console.WriteLine($"Suported: {supproted}");
+        }
+
+    }
+}
