@@ -4,7 +4,7 @@ using Microsoft.JSInterop;
 
 namespace BlazorToast
 {
-    public class ToastService : IAsyncDisposable
+    internal class ToastService : IAsyncDisposable, IToastService
     {
         private const string IsSupportedMethod = "isSupported";
         private const string RequestPermissionMethod = "requestPermission";
