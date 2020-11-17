@@ -2,6 +2,6 @@
 {
     public enum NotificationPermission
     {
-        granted, denied
+        @default, granted, denied
     }
 }

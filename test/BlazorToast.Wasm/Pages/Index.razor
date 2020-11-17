@@ -26,35 +26,58 @@
 <div class="row">
     <div class="col-auto mr-auto"></div>
     <div class="col-auto">
-        <button type="button" class="btn btn-primary" @onclick="CreateNotifcation">Create Notification</button>
+        <button type="button" class="btn btn-primary" disabled="@(!CanRequestPermission())" @onclick="RequestPermission">Request permission</button>
+    </div>
+    <div class="col-auto mr-auto"></div>
+    <div class="col-auto">
+        <button type="button" class="btn btn-primary" disabled="@(!CanCreateNotification())" @onclick="CreateNotification">Create Notification</button>
     </div>
 </div>
 
 @code {
-    private NotificationPermission permission;
+    private NotificationPermission? permission;
     private string? title;
     private string? body;
     private string? icon;
+    private bool? isSupported;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            var supported = await Toasts.IsSupported();
-            Console.WriteLine($"Supported: {supported}");
+            isSupported = await Toasts.IsSupported();
+            Console.WriteLine($"Supported: {isSupported}");
 
-            if (supported)
+            if (isSupported.HasValue && isSupported.Value)
             {
-                permission = await Toasts.RequestPermission();
-                Console.WriteLine($"Permission: {permission}");
+                await RequestPermission();
             }
         }
     }
 
-    private async Task CreateNotifcation()
+    private async Task CreateNotification()
     {
         var result = await Toasts.Create(title ?? "Title", new { body = body ?? "Body", icon = icon ?? "icon-512.png", renotify = true, tag = "my-notif" });
 
         Console.WriteLine($"Result: {result}");
+    }
+
+    private async Task RequestPermission()
+    {
+        permission = await Toasts.RequestPermission();
+        Console.WriteLine($"Permission: {permission}");
+        StateHasChanged();
+    }
+
+    private bool CanRequestPermission()
+    {
+        return (isSupported.HasValue && isSupported.Value)
+            && (!permission.HasValue || (permission != NotificationPermission.granted));
+    }
+
+    private bool CanCreateNotification()
+    {
+        return (isSupported.HasValue && isSupported.Value)
+            && (permission.HasValue && permission == NotificationPermission.granted);
     }
 }
